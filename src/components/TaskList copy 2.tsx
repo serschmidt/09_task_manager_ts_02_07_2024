@@ -52,10 +52,6 @@ const TaskList = () => {
     fetchTodos();
   }, []);
 
-
-
-
-
   const addTask = () => {
     if (newTask.title.trim()) {
       const tasksCopy = [...tasks];

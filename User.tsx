@@ -9,8 +9,7 @@ interface IProps {
   editUser: (user: IUser) => void;
   changeIsDetails: (userDetails: IUser | null) => void;
   setUser: (user: IUser) => void;
-  setChange: React.Dispatch<React.SetStateAction<(() => void) | null>>;
-  // isDetails: boolean;
+  setChange: React.Dispatch<React.SetStateAction<(() => void) | null>>; // Изменение здесь
 }
 
 interface IState {
@@ -33,16 +32,11 @@ export default class User extends Component<IProps, IState> {
 
   toggleEdit = () => {
     this.setState((prevState) => ({ ...prevState, isEdit: !prevState.isEdit }));
-
-    /*    this.setState( (prevState) => {
-      return {...prevState, isEdit: !prevState.isEdit}
-    } )                                                 */
   };
 
   handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     this.setState((prevState) => ({ ...prevState, [name]: value }));
-    // this.setState( (prevState) => ({ ...prevState, [e.target.name]: e.target.value}) )
   };
 
   saveUser = () => {
@@ -50,22 +44,19 @@ export default class User extends Component<IProps, IState> {
     const { editUser, user } = this.props;
 
     const updatedUser = {
-      //TODO
       ...user,
       name,
       company: { name: company },
       phone,
     };
+
     editUser(updatedUser);
     this.toggleEdit();
   };
 
   render() {
     return (
-      <div
-        className="card mb-3"
-        style={{ boxShadow: "0 4px 8px rgba(0,0,0,0.1)" }}
-      >
+      <div className="card mb-3" style={{ boxShadow: "0 4px 8px rgba(0,0,0,0.1)" }}>
         <div className="card-body">
           {this.state.isEdit ? (
             <div>
@@ -87,21 +78,17 @@ export default class User extends Component<IProps, IState> {
                 value={this.state.phone}
                 onChange={this.handleChange}
               />
-              <button
-                className="btn btn-success btn-sm me-2"
-                onClick={this.saveUser}
-              >
+              <button onClick={this.saveUser} className="btn btn-success btn-sm me-2">
                 Save
               </button>
             </div>
           ) : (
             <div className="d-flex align-items-center">
               <NavLink
+                className='className="d-flex align-items-center flex-grow-1 text-decoration-none'
                 to={`/users/${this.props.user.id}`}
                 onClick={() => {
-                  this.props.setChange(
-                    () => () => this.props.changeIsDetails(this.props.user)
-                  );
+                  this.props.setChange(() => () => this.props.changeIsDetails(this.props.user));
                   this.props.setUser(this.props.user);
                   this.props.changeIsDetails(this.props.user);
                 }}
@@ -116,16 +103,10 @@ export default class User extends Component<IProps, IState> {
                   </p>
                 </div>
               </NavLink>
-              <button
-                onClick={this.toggleEdit}
-                className="btn btn-warning btn-sm me-2"
-              >
+              <button onClick={this.toggleEdit} className="btn btn-warning btn-sm me-2">
                 Edit
               </button>
-              <button
-                onClick={this.props.deleteUser}
-                className="btn btn-danger btn-sm"
-              >
+              <button onClick={this.props.deleteUser} className="btn btn-danger btn-sm">
                 Del
               </button>
             </div>
